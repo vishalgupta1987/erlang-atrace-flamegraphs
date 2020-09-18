@@ -117,11 +117,22 @@ view_svg(Req, Trace, Svg) ->
                         Transport:sendfile(Socket, File)
                 end,
             Req2 = cowboy_req:set_resp_body_fun(F, Req),
-            cowboy_req:reply(
-              200,
-              [{"content-type", "image/svg+xml; encoding=utf-8"}],
-              Req2
-             )
+            
+            IndexContainsHtml = string:str(Svg, ".html"),
+            if 
+                IndexContainsHtml > 0 -> 
+                    cowboy_req:reply(
+                        200,
+                        [{"content-type", "text/html; encoding=utf-8"}],
+                        Req2
+                    );
+                true -> 
+                    cowboy_req:reply(
+                        200,
+                        [{"content-type", "image/svg+xml; encoding=utf-8"}],
+                        Req2
+                    )
+            end
     end.
 
 upload_trace(Req) ->

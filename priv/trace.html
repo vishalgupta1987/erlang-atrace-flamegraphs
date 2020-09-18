@@ -1,0 +1,107 @@
+<html>
+<!-- <script>
+    
+    window.addEventListener("load", function(){
+        var a = document.getElementById("mp_home");
+
+        // It's important to add an load event listener to the object,
+        // as it will load the svg doc asynchronously
+        a.addEventListener("load",function(){
+
+            // get the inner DOM of alpha.svg
+            var svgDoc = a.contentDocument;
+
+            console.log(svgDoc);
+
+            // get the inner element by id
+            var delta = svgDoc.querySelector('[title="android.os.Handler#handleCallback (2,971,657 microseconds, 13.23%)"]');
+            // add behaviour
+            delta.addEventListener("mousedown",function(){
+                    alert('hello world!')
+            }, false);
+        }, false);
+    });
+
+    
+</script> -->
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+<body>
+<object data='mp_home.svg' id="mp_home" type='image/svg+xml'></object>
+
+    <script>
+        var svgElement = document.getElementById("mp_home");
+
+        // It's important to add an load event listener to the object,
+        // as it will load the svg doc asynchronously
+        svgElement.addEventListener("load",function(){
+
+            element = document.getElementById("mp_home");
+
+            // get the inner DOM of alpha.svg
+            var svgDoc = element.contentDocument;
+
+            console.log(svgDoc);
+
+            
+
+            // console.log(svgDoc.querySelector("title[android.view.View#updateDisplayListIfDirty*]").innerHTML);
+
+            // var node = svgDoc.querySelector("title").previousElementSibling;
+            // console.log(node);
+            // // node.click();
+            // var clickEvent = new Event('click'); // Create the event.
+            // node.dispatchEvent( clickEvent )
+            
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchString = urlParams.get('s');
+            console.log(searchString);
+
+
+
+            var elList = svgDoc.querySelectorAll("title");
+            elList.forEach(function(el) {
+                if (el.innerHTML.indexOf(searchString) !== -1) {
+                    // Do what you like with el
+                    // The needle is case sensitive
+                    console.log(el.innerHTML);
+                    var previousElement = el.parentNode;
+                    var clickEvent = new Event('click'); // Create the event.
+                    console.log(previousElement.innerHTML);
+                    previousElement.dispatchEvent(clickEvent);
+                    return;
+                }
+            });
+
+            // var element = $("title:contains('android.os.Handler#handleCallback')").prev();
+            // console.log(element.attr('class'));
+            // element.click();
+
+
+
+            // var aTags = svgDoc.getElementsByTagName("tite");
+            // var searchText = "android.os.Handler#handleCallback (2,971,657 microseconds, 13.23%)";
+            // var found;
+
+            // for (var i = 0; i < aTags.length; i++) {
+            //     if (aTags[i].textContent == searchText) {
+            //         found = aTags[i];
+            //         break;
+            //     }
+            // }
+
+            // console.log(element);
+            // element.before.click();
+
+            // // get the inner element by id
+            // var delta = svgDoc.querySelector('[title="android.os.Handler#handleCallback (2,971,657 microseconds, 13.23%)"]');
+            // // add behaviour
+            // delta.addEventListener("mousedown",function(){
+            //         alert('hello world!')
+            // }, false);
+        }, false);
+    </script>
+</body>
+<html>

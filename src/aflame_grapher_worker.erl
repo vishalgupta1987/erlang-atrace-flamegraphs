@@ -106,7 +106,15 @@ parse_and_write(Md5) ->
       end,
       OutNames
      ),
-    aflame_trace_parser:close(Parser).
+    aflame_trace_parser:close(Parser),
+    DummyTraceFilePath = filename:join(code:priv_dir(aflame), "trace.html"),
+    GraphCmd = lists:join(
+                 " ",
+                 [
+                  "./createTraceHtml.sh",
+                  DummyTraceFilePath, aflame_fs:output_dir(Md5)]
+                ),
+    _Ret = os:cmd(GraphCmd).
 
 write_index_file(Md5, SvgNames) ->
     {ok, OutFile} = file:open(aflame_fs:get_trace_index(Md5), [write]),
